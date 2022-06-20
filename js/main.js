@@ -26,12 +26,26 @@ const containerImg = document.querySelector(`.container_img`);
 // inserisco le immagini
 for (let index = 0; index < boxImage.length; index++) {
     console.log(boxImage[index]);
-
     const newImage = document.createElement(`img`);
-    newImage.classList.add(`ms_img`);
+    newImage.classList.add(`ms_img`, `d-none`);
     newImage.setAttribute(`src`, boxImage[index]);
     containerImg.append(newImage);
 }
+
+
+
+
+// let elementActive = boxImage[1];
+//  console.log(elementActive); 
+//  // boxImage[elementActive].classList.add(`ms_img_active`);
+
+
+
+
+
+
+
+
 
 
 
