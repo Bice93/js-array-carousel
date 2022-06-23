@@ -8,8 +8,6 @@
 //Al termine di questa fase ci ritroveremo con lo stesso slider stilato nella milestone 1,
 //ma costruito dinamicamente attraverso JavaScript.
 
-
-
 // Inserisco le immagini in un array
 const boxImage = [
     'https://cdn.photographycourse.net/wp-content/uploads/2022/04/Portrait-vs-Landscape-Featured-Image-3.jpg',
@@ -20,32 +18,72 @@ const boxImage = [
     'https://mymodernmet.com/wp/wp-content/uploads/2020/02/Landscape-Photographer-of-the-Year-Sander-Grefte.jpg'
 ];
 
-const containerImg = document.querySelector(`.container_img`);
+console.log(boxImage)
 
+//recupero il parent all'interno della quale vado ad inserire le mie immagini
+const containerImg = document.querySelector(`.container_img`); //parent
 
-// inserisco le immagini
+let activeImageIndex = 0;
+// inserisco le mie immagini
 for (let index = 0; index < boxImage.length; index++) {
     console.log(boxImage[index]);
+    // creo un elemento di tipo immagine
     const newImage = document.createElement(`img`);
-    newImage.classList.add(`ms_img`, `d-none`);
+
+    // gli attribuisco le proprietà che ritengo necessarie
     newImage.setAttribute(`src`, boxImage[index]);
+
+    // gli attribuisco la classe
+    newImage.classList.add(`ms_img`);
+
+    // lo aggiungo al parent
     containerImg.append(newImage);
+
+    if (index == activeImageIndex) {
+        newImage.classList.add(`active`)
+    }
 }
 
+ //prendo tutti gli elementi di tipo img figli di container_img
+ const imageElements = document.querySelectorAll(`.container_img img`);
+
+//recupero i bottoni dal DOM
+const prevButton = document.getElementById(`prev-button`);
+const nextButton = document.getElementById(`next-button`);
 
 
+//devo aggiungere un comportamento conseguente ad un'interazione con i bottoni
 
-// let elementActive = boxImage[1];
-//  console.log(elementActive); 
-//  // boxImage[elementActive].classList.add(`ms_img_active`);
+nextButton.addEventListener(`click`, function () {
+    // OPPURE //prendo tutti gli elementi di tipo img figli di container_img
+    // const imageElements = document.querySelectorAll(`.container_img img`);
 
+    // const imageHidden = imageElements[activeImageIndex];
+    // imageHidden.classList.remove(`active`);
 
+    //prendo l'immagine attiva
+    const activeImage = document.querySelector(`img.active`);
+    activeImage.classList.remove(`active`);
 
+    activeImageIndex++;  //activeImageIndex = activeImageIndex + 1
 
+    //se arrivo alla fine della lista ricomincio da 0
+    if (activeImageIndex == boxImage.length) {
+        activeImageIndex = 0;
+    };
+   
+    //prendo l'immagine all'indice attuale e le aggiungo la classe active
+    imageElements[activeImageIndex].classList.add(`active`);
+     //console.log(activeImageIndex);
+});
 
+prevButton.addEventListener(`click`, function (){
+    imageElements[activeImageIndex].classList.remove(`active`);
+    activeImageIndex--;
+    if (activeImageIndex === -1) {
+        activeImageIndex = boxImage.length - 1;
+    }
 
-
-
-
-
-
+    imageElements[activeImageIndex].classList.add(`active`);
+    //console.log(activeImageIndex);
+});
